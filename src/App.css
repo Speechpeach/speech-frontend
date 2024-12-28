@@ -206,3 +206,29 @@
 .login-submit-btn:hover {
   background-color: #0056b3;
 }
+
+.social-login {
+  margin-top: 1rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.kakao-login-btn {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #FEE500;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.kakao-login-btn:hover {
+  background-color: #E6CF00;
+}

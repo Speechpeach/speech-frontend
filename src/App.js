@@ -24,6 +24,7 @@ function App() {
     };
   }, []);
 
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -32,6 +33,13 @@ function App() {
     setIsDropdownOpen(false);
     setIsLoginModalOpen(true);
   };
+
+  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_APP_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
+
+
+  const loginHandler = () => {
+    window.location.href = link;
+  }
 
   return (
     <div className="App">
@@ -51,7 +59,7 @@ function App() {
           </button>
           {isDropdownOpen && (
             <div className="dropdown-content">
-              <button className="login-btn" onClick={handleLoginClick}>로그인</button>
+              <button className="login-btn" onClick={loginHandler}>로그인</button>
             </div>
           )}
         </div>
@@ -64,25 +72,6 @@ function App() {
           <button className="cta-button">자세히 보기</button>
         </section>
       </main>
-
-      {isLoginModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content" ref={modalRef}>
-            <h2>로그인</h2>
-            <form className="login-form">
-              <div className="form-group">
-                <label htmlFor="email">이메일</label>
-                <input type="email" id="email" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">비밀번호</label>
-                <input type="password" id="password" required />
-              </div>
-              <button type="submit" className="login-submit-btn">로그인</button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
