@@ -5,6 +5,7 @@ import speechPeach from './images/speechPeach.jpg';
 function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const modalRef = useRef(null);
 
@@ -41,6 +42,11 @@ function App() {
     window.location.href = link;
   }
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    console.log('검색어:', searchQuery);
+  };
+
   return (
     <div className="App">
       <nav className="navbar">
@@ -53,6 +59,20 @@ function App() {
           <li><a href="#services">서비스</a></li>
           <li><a href="#contact">문의하기</a></li>
         </ul>
+        <div className="search-container">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="검색어를 입력하세요"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            <button type="submit" className="search-button">
+              <i className="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
         <div className="profile-dropdown" ref={dropdownRef}>
           <button className="profile-btn" onClick={toggleDropdown}>
             <i className="fas fa-user"></i>
