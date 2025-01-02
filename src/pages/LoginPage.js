@@ -1,48 +1,33 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import '../styles/LoginPage.css';
+import React from 'react';
+import kakao_login_medium_narrow from '../images/kakao_login_medium_narrow.png';
+import './LoginPage.css';
 
-function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const history = useHistory();
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_APP_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // 여기에 로그인 로직을 구현하면 됩니다
-    console.log('로그인 시도:', email, password);
+const LoginPage = ({ isOpen, onClose }) => {
+  const loginHandler = () => {
+    window.location.href = KAKAO_AUTH_URL;
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>로그인</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">이메일</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">비밀번호</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="login-submit-btn">로그인</button>
-        </form>
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        <div className="login-container">
+          <h2>로그인</h2>
+          <img 
+            src={kakao_login_medium_narrow} 
+            alt="카카오 로그인" 
+            className="kakao-login-btn"
+            onClick={loginHandler}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default LoginPage; 
