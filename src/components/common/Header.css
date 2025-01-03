@@ -1,0 +1,129 @@
+.navbar {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.nav-logo {
+  flex: 0 0 15%;  /* 로고 영역: 15% */
+  min-width: 100px;
+}
+
+/* nav-links를 가운데 정렬하기 위한 스타일 */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  flex: 0 0 50%;  /* 메뉴 영역: 50% */
+  justify-content: center;
+}
+
+/* 검색창과 로그인 부분을 오른쪽으로 정렬 */
+.search-container {
+  display: flex;
+  align-items: center;
+  flex: 15% 0 0%;  /* 검색 영역: 25% */
+  justify-content: flex-end;
+  padding: 0 1rem;
+}
+
+.search-container form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* 나머지 header 관련 스타일들... */
+
+.header-nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-nav a:hover {
+  color: #00c471;
+}
+
+.header-nav svg {
+  color: currentColor;
+}
+
+.nav-links li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.nav-links li a svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  transition: stroke 0.2s ease;
+}
+
+.nav-links li a:hover {
+  color: #00c471;
+}
+
+.nav-links li a:hover svg {
+  stroke: #00c471;
+}
+
+.nav-links li a img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+}
+
+.nav-links li a:hover img {
+  opacity: 1;
+}
+
+.nav-links li a span {
+  font-size: 0.95rem;
+}
+
+.login-btn {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #00c471;
+  border-radius: 10px;
+  background: transparent;
+  color: #00c471;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #00c471;
+  color: white;
+} 

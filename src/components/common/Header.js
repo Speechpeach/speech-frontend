@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import speechPeach from '../images/speechPeach.jpg';
+import LoginPage from '../../pages/LoginPage';
+import speechPeach from '../../images/speechPeach.jpg';
+import { HomeIcon, StudyIcon, TvIcon, MentoringIcon } from '../../assets/icons';
 import './Header.css';
 
 const Header = () => {
@@ -35,10 +36,30 @@ const Header = () => {
           <img src={speechPeach} alt="Speech Peach Logo" className="logo-image" />
         </div>
         <ul className="nav-links">
-          <li><Link to="/">홈</Link></li>
-          <li><Link to="/about">소개</Link></li>
-          <li><Link to="/services">서비스</Link></li>
-          <li><Link to="/contact">문의하기</Link></li>
+          <li>
+            <Link to="/">
+              <HomeIcon />
+              <span>홈</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/study">
+              <TvIcon />
+              <span>학습하기</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/review">
+              <StudyIcon />
+              <span>복습하기</span>
+            </Link>
+            </li>
+          <li>
+            <Link to="/mentoring">
+              <MentoringIcon />
+              <span>멘토링</span>
+            </Link>
+          </li>
         </ul>
         <div className="search-container">
           <form onSubmit={handleSearch}>

@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
+import ScrollToTop from './components/common/ScrollToTop';
+import Home from './pages/Home';
+import MentoringPage from './pages/MentoringPage';
+import LearningPage from './pages/LearningPage';
+import VideoDetailPage from './pages/VideoDetailPage';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -87,13 +92,17 @@ const mentorData = [
     id: 1,
     name: '김멘토',
     role: '언어치료사',
+    experience: '10년',
+    specialties: ['언어치료', '발달장애', '조음장애'],
     description: '10년 경력의 언어치료 전문가',
-    imageUrl: 'https://via.placeholder.com/150' // 실제 이미지로 교체 필요
+    imageUrl: 'https://via.placeholder.com/150'
   },
   {
     id: 2,
     name: '이멘토',
     role: '심리상담사',
+    experience: '8년',
+    specialties: ['심리상담', '놀이치료', '행동치료'],
     description: '아동 심리 전문가',
     imageUrl: 'https://via.placeholder.com/150'
   },
@@ -101,6 +110,8 @@ const mentorData = [
     id: 3,
     name: '박멘토',
     role: '특수교육사',
+    experience: '15년',
+    specialties: ['특수교육', '언어발달', '인지발달'],
     description: '특수교육 15년 경력',
     imageUrl: 'https://via.placeholder.com/150'
   },
@@ -108,6 +119,8 @@ const mentorData = [
     id: 4,
     name: '최멘토',
     role: '언어발달전문가',
+    experience: '12년',
+    specialties: ['언어발달', '학습장애', '읽기장애'],
     description: '언어발달 지도 전문가',
     imageUrl: 'https://via.placeholder.com/150'
   }
@@ -175,96 +188,89 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   return (
     <div className="App">
       <Header />
       
-      <main className="main-content">
-        <section className="hero-section">
-          <h1>환영합니다</h1>
-          <p>멋진 웹사이트에 오신 것을 환영합니다</p>
-          <button className="cta-button">자세히 보기</button>
-        </section>
+      <Switch>
+        <Route exact path="/">
+          <main className="main-content">
+            <section className="hero-section">
+              <h1>환영합니다</h1>
+              <p>멋진 웹사이트에 오신 것을 환영합니다</p>
+              <button className="cta-button">자세히 보기</button>
+            </section>
 
-        <section className="video-section">
-          <h2>추천 영상</h2>
-          <div className="video-slider-container">
-            <Slider
-              dots={true}
-              infinite={true}
-              speed={500}
-              slidesToShow={4}
-              slidesToScroll={1}
-              autoplay={true}
-              autoplaySpeed={3000}
-              pauseOnHover={true}
-              cssEase="linear"
-              nextArrow={<NextArrow />}
-              prevArrow={<PrevArrow />}
-              responsive={[
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                  }
-                },
-                {
-                  breakpoint: 768,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1
-                  }
-                }
-              ]}
-            >
-              {videoData.map((video) => (
-                <VideoItem
-                  key={video.id}
-                  id={video.id}
-                  title={video.title}
-                  thumbnail={video.thumbnail}
-                  channelTitle={video.channelTitle}
-                  publishedAt={video.publishedAt}
-                />
-              ))}
-            </Slider>
-          </div>
-        </section>
+            <section className="video-section">
+              <h2>추천 영상</h2>
+              <div className="video-slider-container">
+                <Slider
+                  dots={true}
+                  infinite={true}
+                  speed={500}
+                  slidesToShow={4}
+                  slidesToScroll={1}
+                  autoplay={true}
+                  autoplaySpeed={3000}
+                  pauseOnHover={true}
+                  cssEase="linear"
+                  nextArrow={<NextArrow />}
+                  prevArrow={<PrevArrow />}
+                  responsive={[
+                    {
+                      breakpoint: 1024,
+                      settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                      }
+                    },
+                    {
+                      breakpoint: 768,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]}
+                >
+                  {videoData.map((video) => (
+                    <VideoItem
+                      key={video.id}
+                      id={video.id}
+                      title={video.title}
+                      thumbnail={video.thumbnail}
+                      channelTitle={video.channelTitle}
+                      publishedAt={video.publishedAt}
+                    />
+                  ))}
+                </Slider>
+              </div>
+            </section>
 
-        <section className="mentor-section">
-          <h2>이번달의 멘토</h2>
-          <div className="mentor-container">
-            {mentorData.map((mentor) => (
-              <MentorCard
-                key={mentor.id}
-                name={mentor.name}
-                role={mentor.role}
-                description={mentor.description}
-                imageUrl={mentor.imageUrl}
-              />
-            ))}
-          </div>
-        </section>
-      </main>
+            <section className="mentor-section">
+              <h2>이번달의 멘토</h2>
+              <div className="mentor-container">
+                {mentorData.map((mentor) => (
+                  <MentorCard
+                    key={mentor.id}
+                    name={mentor.name}
+                    role={mentor.role}
+                    description={mentor.description}
+                    imageUrl={mentor.imageUrl}
+                  />
+                ))}
+              </div>
+            </section>
+          </main>
+        </Route>
+        <Route path="/mentoring">
+          <MentoringPage />
+        </Route>
+        <Route exact path="/study" component={LearningPage} />
+        <Route path="/study/video/:id" component={VideoDetailPage} />
+      </Switch>
 
-      {showScrollTop && (
-        <button 
-          className="scroll-to-top"
-          onClick={scrollToTop}
-          aria-label="맨 위로 이동"
-        >
-          <i className="fas fa-arrow-up"></i>
-        </button>
-      )}
-
+      <ScrollToTop show={showScrollTop} />
       <Footer />
     </div>
   );

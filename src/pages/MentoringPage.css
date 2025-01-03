@@ -1,0 +1,515 @@
+.mentoring-page {
+  padding: 2rem;
+  margin-top: 80px;
+}
+
+.mentoring-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.mentoring-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.mentoring-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.mentor-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: flex-end;
+}
+
+.filter-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.mentor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mentor-card {
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.mentor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(255, 132, 0, 0.15);
+}
+
+.mentor-image {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mentor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mentor-info {
+  padding: 1rem;
+}
+
+.mentor-info h2 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.mentor-info h3 {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.experience {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.specialty-tag {
+  padding: 0.2rem 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  color: #555;
+}
+
+.certifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.cert-tag {
+  padding: 0.2rem 0.6rem;
+  background-color: #fff3e0;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #ff8400;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.availability {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.consult-button {
+  margin-top: auto;
+  padding: 0.6rem;
+  background-color: #ff8400;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.consult-button:hover {
+  background-color: #ff6a00;
+}
+
+@media (max-width: 1200px) {
+  .mentor-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .mentor-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .mentor-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  z-index: 1;
+}
+
+.modal-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.modal-title h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.modal-title h3 {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.modal-info h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
+
+/* 반응형 모달 */
+@media (max-width: 768px) {
+  .modal-content {
+    height: 90vh;
+  }
+
+  .modal-body {
+    padding: 1.2rem;
+  }
+
+  .modal-button-container {
+    padding: 1rem;
+  }
+}
+
+/* 모달 내부의 태그 스타일은 그대로 유지 */
+.modal-info .specialty-tag {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.modal-info .cert-tag {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* 버튼 컨테이너 추가 */
+.modal-button-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 1rem 2rem;
+  border-top: 1px solid #eee;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-button-container .consult-button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* 별점 스타일 */
+.rating-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stars {
+  color: #ffd700;  /* 노란색 별 */
+  font-size: 1rem;
+  letter-spacing: -1px;
+}
+
+.rating-text {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 모달 내 별점 스타일 */
+.modal-title .rating-info {
+  margin: 0.5rem 0;
+}
+
+.modal-title .stars {
+  font-size: 1.2rem;
+}
+
+.modal-title .rating-text {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* 별점 뱃지 스타일 */
+.rating-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.rating-badge:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-2px);
+}
+
+.rating-number {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.rating-star {
+  color: #ffd700;
+  font-size: 0.9rem;
+}
+
+/* 리뷰 모달 스타일 */
+.review-modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-modal-header {
+  padding: 2rem 2rem 0;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.rating-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.rating-big {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rating-big .rating-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.rating-big .stars {
+  font-size: 2rem;
+}
+
+.review-count {
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.reviews-list {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.review-item {
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-author {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.review-date {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.review-content {
+  color: #333;
+  line-height: 1.5;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .review-modal-content {
+    height: 90vh;
+  }
+
+  .review-modal-header {
+    padding: 1.5rem 1.5rem 0;
+  }
+
+  .reviews-list {
+    padding: 1.5rem;
+  }
+}
+
+/* 좋아요 버튼 스타일 */
+.like-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #666;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.like-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.like-button.liked {
+  color: #ff4b4b;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* 이미지 컨테이너에 그라데이션 오버레이 추가 */
+.mentor-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+  pointer-events: none;
+} 

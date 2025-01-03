@@ -1,0 +1,92 @@
+.calendar-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendar-header__title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-grid__day-name {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #868e96;
+  padding: 0.5rem;
+}
+
+.calendar-grid__date {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-grid__date button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.calendar-grid__date--active button {
+  color: #00c471;
+}
+
+.calendar-grid__date--disabled button {
+  color: #ced4da;
+  cursor: not-allowed;
+}
+
+.calendar-footer {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #868e96;
+}
+
+.can-apply-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #00c471;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.cannot-apply-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #ced4da;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.calendar-footer > div {
+  display: flex;
+  align-items: center;
+}
+
+.times__kst {
+  margin-top: 1rem;
+  color: #868e96;
+  font-size: 0.9rem;
+} 
