@@ -1,0 +1,77 @@
+.mentor-intro-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.intro-content section {
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.intro-content h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.intro-content p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.intro-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.intro-content ul li {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.intro-content ul li::before {
+  content: "•";
+  color: #00c471;
+  position: absolute;
+  left: 0;
+}
+
+.modal-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.apply-button {
+  padding: 1rem 3rem;
+  background-color: #00c471;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.apply-button:hover {
+  background-color: #00a65a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 196, 113, 0.2);
+} 

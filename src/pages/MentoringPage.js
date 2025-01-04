@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './MentoringPage.css';
 import ApplyMentoringModal from '../components/mentoring/ApplyMentoringModal';
+import { useHistory } from 'react-router-dom';
 
 const mentorData = [
   {
@@ -255,12 +256,14 @@ const MentorCard = ({ mentor, onClick, onReviewClick }) => {
 const MentoringPage = () => {
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [showReviews, setShowReviews] = useState(false);
+  const history = useHistory();
 
   return (
     <div className="mentoring-page">
       <div className="mentoring-header">
         <h1>멘토링</h1>
-        <p>전문 아나운서, 성우와 함께하는 발음·발성 교정</p>
+        <p>전문 멘토와 함께 발음과 발성을 교정해보세요</p>
+        <button className="apply-mentor-btn" onClick={() => history.push('/apply-mentor')}>멘토 지원하기</button>
       </div>
 
       <div className="mentor-filter">

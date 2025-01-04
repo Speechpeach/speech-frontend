@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import MentoringPage from './pages/MentoringPage';
 import LearningPage from './pages/LearningPage';
 import VideoDetailPage from './pages/VideoDetailPage';
+import ApplyMentorPage from './pages/ApplyMentorPage';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -266,6 +267,7 @@ function App() {
         <Route path="/mentoring">
           <MentoringPage />
         </Route>
+        <Route path="/apply-mentor" component={ApplyMentorPage} />
         <Route exact path="/study" component={LearningPage} />
         <Route path="/study/video/:id" component={VideoDetailPage} />
       </Switch>

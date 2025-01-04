@@ -6,6 +6,7 @@
 .mentoring-header {
   text-align: center;
   margin-bottom: 3rem;
+  position: relative;
 }
 
 .mentoring-header h1 {
@@ -17,6 +18,7 @@
 .mentoring-header p {
   font-size: 1.2rem;
   color: #666;
+  margin-bottom: 2rem;
 }
 
 .mentor-filter {
@@ -512,4 +514,23 @@
   height: 50%;
   background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
   pointer-events: none;
+}
+
+.apply-mentor-btn {
+  padding: 0.8rem 2rem;
+  background-color: #00c471;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 196, 113, 0.1);
+}
+
+.apply-mentor-btn:hover {
+  background-color: #00a65a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 196, 113, 0.2);
 } 
