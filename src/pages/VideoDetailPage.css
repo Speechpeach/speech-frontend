@@ -1,30 +1,35 @@
 .video-detail-page {
   padding: 2rem;
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
-.video-detail-container {
+.split-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
 }
 
-.video-player-section {
-  position: sticky;
-  top: 100px;
+.left-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.video-player-wrapper {
+.video-section {
+  width: 100%;
+}
+
+.video-wrapper {
   position: relative;
-  padding-top: 56.25%;
-  background: #000;
-  border-radius: 12px;
+  padding-bottom: 56.25%;
+  height: 0;
   overflow: hidden;
+  border-radius: 12px;
 }
 
-.video-player-wrapper iframe {
+.video-wrapper iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -32,38 +37,162 @@
   height: 100%;
 }
 
-.video-info {
-  margin-top: 1.5rem;
-}
-
-.video-info h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  line-height: 1.4;
-}
-
-.video-meta {
+.interaction-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-grow: 1;
   display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.tab-button {
+  padding: 1rem 2rem;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button:hover {
+  color: #00c471;
+}
+
+.tab-button.active {
+  color: #00c471;
+  border-bottom: 2px solid #00c471;
+}
+
+.tab-content {
+  padding: 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.memo-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.memo-textarea {
+  width: 100%;
+  flex-grow: 1;
+  min-height: 200px;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.memo-textarea:focus {
+  outline: none;
+  border-color: #00c471;
+}
+
+.record-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.record-controls {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.record-button,
+.stop-button {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.record-button {
+  background-color: #00c471;
+  color: white;
+}
+
+.record-button:hover {
+  background-color: #00a65a;
+}
+
+.stop-button {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.stop-button:hover {
+  background-color: #ff5252;
+}
+
+.recordings-list {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  color: #666;
+  overflow-y: auto;
+}
+
+.recording-item {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recording-timestamp {
   font-size: 0.9rem;
+  color: #868e96;
+}
+
+.audio-player {
+  width: 100%;
+}
+
+.right-section {
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 100px);
 }
 
 .script-section {
   background: white;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .script-section h2 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .script-content {
+  flex-grow: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -72,11 +201,18 @@
 .script-line {
   display: flex;
   gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.script-line:hover {
+  background-color: #f8f9fa;
 }
 
 .timestamp {
   flex-shrink: 0;
-  color: #666;
+  color: #868e96;
   font-size: 0.9rem;
   width: 60px;
 }
@@ -84,16 +220,19 @@
 .script-line p {
   margin: 0;
   line-height: 1.6;
+  color: #495057;
 }
 
 @media (max-width: 1200px) {
-  .video-detail-container {
+  .split-container {
     grid-template-columns: 1fr;
   }
 
-  .video-player-section {
+  .right-section {
     position: relative;
     top: 0;
+    height: auto;
+    min-height: 400px;
   }
 }
 
@@ -102,7 +241,11 @@
     padding: 1rem;
   }
 
-  .script-section {
+  .tab-button {
+    padding: 0.75rem 1rem;
+  }
+
+  .tab-content {
     padding: 1rem;
   }
 } 
