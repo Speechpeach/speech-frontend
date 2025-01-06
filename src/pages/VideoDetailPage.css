@@ -248,4 +248,194 @@
   .tab-content {
     padding: 1rem;
   }
+}
+
+.script-tools {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tool-label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.tool-button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  color: #495057;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tool-button:hover {
+  background: #f1f3f5;
+  border-color: #adb5bd;
+}
+
+.script-text-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.script-textarea {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 2.5rem;
+  font-family: inherit;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  user-select: text;
+  cursor: text;
+  background-color: #f8f9fa;
+}
+
+.script-textarea:focus {
+  outline: none;
+  border-color: #00c471;
+  background-color: white;
+}
+
+.line-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.line-tools button {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  color: #495057;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.line-tools button:hover {
+  background: #f1f3f5;
+  border-color: #adb5bd;
+}
+
+@media (max-width: 768px) {
+  .script-tools {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tool-group {
+    flex-wrap: wrap;
+  }
+
+  .line-tools {
+    flex-direction: row;
+  }
+}
+
+/* 이어읽기 기호 스타일링 */
+.script-textarea, .tool-button {
+  --bridge-position: -1em;  /* 기호의 상단 위치 조정 */
+}
+
+.script-textarea:not(:empty), .tool-button {
+  text-combine-upright: none;
+}
+
+/* 이어읽기 기호(‿)를 위첨자처럼 표시 */
+.script-textarea:not(:empty) ‿, .tool-button ‿ {
+  display: inline-block;
+  position: relative;
+  top: var(--bridge-position);
+  font-size: 1.2em;
+  line-height: 0;
+  vertical-align: top;
+}
+
+/* 형광펜 버튼 스타일 */
+.highlight-button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.highlight-button:hover {
+  transform: scale(1.1);
+}
+
+.highlight-button.active {
+  border: 2px solid #495057;
+}
+
+.highlight-tool-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  opacity: 0.7;
+}
+
+.highlight-tool-button:hover {
+  opacity: 1;
+}
+
+.highlight-icon {
+  font-size: 14px;
+}
+
+/* 형광펜 표시된 텍스트 스타일 */
+.script-textarea mark {
+  padding: 0 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.script-textarea mark:hover {
+  opacity: 0.7;
+}
+
+.script-textarea mark::after {
+  content: attr(title);
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.script-textarea mark:hover::after {
+  visibility: visible;
+  opacity: 1;
 } 

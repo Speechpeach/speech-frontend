@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import './VideoDetailPage.css';
 
@@ -9,14 +9,43 @@ const VideoDetailPage = () => {
   const [recordings, setRecordings] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
-
-  // 임시 스크립트 데이터
-  const scriptData = [
+  const [highlightColor, setHighlightColor] = useState('#fff740');
+  const [scriptData, setScriptData] = useState([
     { time: '00:00', text: '앵커: 안녕하십니까, KBS 뉴스입니다.' },
     { time: '00:05', text: '오늘의 주요 뉴스를 전해드리겠습니다.' },
     { time: '00:10', text: '첫 번째 소식입니다. 정부가 오늘 발표한 새로운 정책에 대해 알아보겠습니다.' },
-    // ... 더 많은 스크립트 라인
-  ];
+  ]);
+
+  const textareaRefs = useRef({});
+
+  const insertSymbol = (lineIndex, symbol) => {
+    const textarea = textareaRefs.current[lineIndex];
+    if (!textarea) return;
+
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    
+    // 선택된 텍스트가 해당 div 내부인지 확인
+    if (!textarea.contains(range.commonAncestorContainer)) {
+      // 커서가 없는 경우 텍스트 끝에 추가
+      const textNode = document.createTextNode(symbol);
+      textarea.appendChild(textNode);
+    } else {
+      // 선택된 위치에 삽입
+      const textNode = document.createTextNode(symbol);
+      range.insertNode(textNode);
+      // 커서를 삽입된 기호 뒤로 이동
+      range.setStartAfter(textNode);
+      range.setEndAfter(textNode);
+    }
+    
+    const newScriptData = [...scriptData];
+    newScriptData[lineIndex] = {
+      ...newScriptData[lineIndex],
+      text: textarea.innerHTML
+    };
+    setScriptData(newScriptData);
+  };
 
   const startRecording = async () => {
     try {
@@ -53,6 +82,67 @@ const VideoDetailPage = () => {
 
   const handleMemoChange = (e) => {
     setMemo(e.target.value);
+  };
+
+  const removeHighlight = (event, lineIndex) => {
+    // mark 태그를 클릭한 경우에만 처리
+    if (event.target.tagName.toLowerCase() === 'mark') {
+      const mark = event.target;
+      const textContent = mark.textContent;
+      const textNode = document.createTextNode(textContent);
+      mark.parentNode.replaceChild(textNode, mark);
+      
+      const textarea = textareaRefs.current[lineIndex];
+      const newScriptData = [...scriptData];
+      newScriptData[lineIndex] = {
+        ...newScriptData[lineIndex],
+        text: textarea.innerHTML
+      };
+      setScriptData(newScriptData);
+    }
+  };
+
+  const handleHighlight = (lineIndex) => {
+    const textarea = textareaRefs.current[lineIndex];
+    if (!textarea) return;
+
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    
+    // 선택된 텍스트가 해당 div 내부인지 확인
+    if (!textarea.contains(range.commonAncestorContainer)) return;
+    
+    if (selection.isCollapsed) return; // 텍스트가 선택되지 않은 경우
+
+    try {
+      // 선택된 텍스트의 내용을 가져옴
+      const selectedText = range.toString();
+      
+      // 기존 range 제거
+      range.deleteContents();
+      
+      // 새로운 mark 요소 생성
+      const span = document.createElement('mark');
+      span.style.backgroundColor = highlightColor;
+      span.title = '클릭하여 형광펜 지우기';
+      span.textContent = selectedText;
+      
+      // 새로운 요소 삽입
+      range.insertNode(span);
+    } catch (error) {
+      console.error('형광펜 표시 중 오류 발생:', error);
+      return;
+    }
+
+    const newScriptData = [...scriptData];
+    newScriptData[lineIndex] = {
+      ...newScriptData[lineIndex],
+      text: textarea.innerHTML
+    };
+    setScriptData(newScriptData);
+    
+    // 선택 영역 초기화
+    selection.removeAllRanges();
   };
 
   return (
@@ -127,11 +217,73 @@ const VideoDetailPage = () => {
         <div className="right-section">
           <div className="script-section">
             <h2>스크립트</h2>
+            <div className="script-tools">
+              <div className="tool-group">
+                <span className="tool-label">장단음:</span>
+                <button onClick={() => insertSymbol(0, "ː")} className="tool-button">ː(장음)</button>
+              </div>
+              <div className="tool-group">
+                <span className="tool-label">끊어읽기:</span>
+                <button onClick={() => insertSymbol(0, "/")} className="tool-button">/</button>
+              </div>
+              <div className="tool-group">
+                <span className="tool-label">이어읽기:</span>
+                <button onClick={() => insertSymbol(0, "↗")} className="tool-button">↗</button>
+              </div>
+              <div className="tool-group">
+                <span className="tool-label">형광펜:</span>
+                <button 
+                  className={`highlight-button ${highlightColor === '#fff740' ? 'active' : ''}`}
+                  onClick={() => setHighlightColor('#fff740')}
+                  style={{ backgroundColor: '#fff740' }}
+                ></button>
+                <button 
+                  className={`highlight-button ${highlightColor === '#96ff8e' ? 'active' : ''}`}
+                  onClick={() => setHighlightColor('#96ff8e')}
+                  style={{ backgroundColor: '#96ff8e' }}
+                ></button>
+                <button 
+                  className={`highlight-button ${highlightColor === '#ff9696' ? 'active' : ''}`}
+                  onClick={() => setHighlightColor('#ff9696')}
+                  style={{ backgroundColor: '#ff9696' }}
+                ></button>
+              </div>
+            </div>
             <div className="script-content">
               {scriptData.map((line, index) => (
                 <div key={index} className="script-line">
                   <span className="timestamp">{line.time}</span>
-                  <p>{line.text}</p>
+                  <div className="script-text-container">
+                    <div
+                      ref={el => textareaRefs.current[index] = el}
+                      className="script-textarea"
+                      contentEditable="true"
+                      suppressContentEditableWarning={true}
+                      onInput={(e) => {
+                        const newScriptData = [...scriptData];
+                        newScriptData[index] = {
+                          ...newScriptData[index],
+                          text: e.target.innerHTML
+                        };
+                        setScriptData(newScriptData);
+                      }}
+                      onClick={(e) => removeHighlight(e, index)}
+                      dangerouslySetInnerHTML={{ __html: line.text }}
+                    ></div>
+                    <div className="line-tools">
+                      <button onClick={() => insertSymbol(index, "ː")} title="장음">ː</button>
+                      <button onClick={() => insertSymbol(index, "/")} title="끊어읽기">/</button>
+                      <button onClick={() => insertSymbol(index, "↗")} title="이어읽기">↗</button>
+                      <button 
+                        onClick={() => handleHighlight(index)} 
+                        title="형광펜으로 표시"
+                        className="highlight-tool-button"
+                        style={{ backgroundColor: highlightColor }}
+                      >
+                        <span className="highlight-icon">✏️</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
