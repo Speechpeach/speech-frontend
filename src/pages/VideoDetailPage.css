@@ -183,6 +183,48 @@
   flex-direction: column;
 }
 
+.script-tools {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tool-label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 500;
+}
+
+.tool-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: white;
+  color: #495057;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 40px;
+  text-align: center;
+}
+
+.tool-button:hover {
+  background: #f1f3f5;
+  border-color: #00c471;
+  color: #00c471;
+}
+
 .script-section h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
@@ -193,201 +235,106 @@
 .script-content {
   flex-grow: 1;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.script-line {
-  display: flex;
-  gap: 1rem;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.script-line:hover {
-  background-color: #f8f9fa;
-}
-
-.timestamp {
-  flex-shrink: 0;
-  color: #868e96;
-  font-size: 0.9rem;
-  width: 60px;
-}
-
-.script-line p {
-  margin: 0;
-  line-height: 1.6;
-  color: #495057;
-}
-
-@media (max-width: 1200px) {
-  .split-container {
-    grid-template-columns: 1fr;
-  }
-
-  .right-section {
-    position: relative;
-    top: 0;
-    height: auto;
-    min-height: 400px;
-  }
-}
-
-@media (max-width: 768px) {
-  .video-detail-page {
-    padding: 1rem;
-  }
-
-  .tab-button {
-    padding: 0.75rem 1rem;
-  }
-
-  .tab-content {
-    padding: 1rem;
-  }
-}
-
-.script-tools {
-  background: #f8f9fa;
   padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.tool-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.tool-label {
-  font-size: 0.9rem;
-  color: #495057;
-  font-weight: 500;
-}
-
-.tool-button {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
   background: white;
-  color: #495057;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tool-button:hover {
-  background: #f1f3f5;
-  border-color: #adb5bd;
+  border-radius: 8px;
 }
 
 .script-text-container {
-  flex: 1;
   position: relative;
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .script-textarea {
   flex: 1;
-  padding: 0.5rem;
+  padding: 1.5rem;
   border: 1px solid #dee2e6;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 1rem;
-  line-height: 1.6;
-  min-height: 2.5rem;
+  line-height: 1.8;
+  min-height: calc(100vh - 300px);
   font-family: inherit;
   white-space: pre-wrap;
   overflow-y: auto;
   user-select: text;
   cursor: text;
-  background-color: #f8f9fa;
+  background-color: white;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.script-textarea time {
+  color: #00c471;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.script-textarea time:hover {
+  background-color: #e6f8f1;
+}
+
+.script-textarea time:active {
+  background-color: #00c471;
+  color: white;
 }
 
 .script-textarea:focus {
   outline: none;
   border-color: #00c471;
-  background-color: white;
+  box-shadow: 0 0 0 3px rgba(0, 196, 113, 0.1);
 }
 
 .line-tools {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 .line-tools button {
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   border: 1px solid #dee2e6;
   border-radius: 4px;
   background: white;
   color: #495057;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .line-tools button:hover {
   background: #f1f3f5;
-  border-color: #adb5bd;
+  border-color: #00c471;
+  color: #00c471;
 }
 
-@media (max-width: 768px) {
-  .script-tools {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .tool-group {
-    flex-wrap: wrap;
-  }
-
-  .line-tools {
-    flex-direction: row;
-  }
-}
-
-/* 이어읽기 기호 스타일링 */
-.script-textarea, .tool-button {
-  --bridge-position: -1em;  /* 기호의 상단 위치 조정 */
-}
-
-.script-textarea:not(:empty), .tool-button {
-  text-combine-upright: none;
-}
-
-/* 이어읽기 기호(‿)를 위첨자처럼 표시 */
-.script-textarea:not(:empty) ‿, .tool-button ‿ {
-  display: inline-block;
-  position: relative;
-  top: var(--bridge-position);
-  font-size: 1.2em;
-  line-height: 0;
-  vertical-align: top;
-}
-
-/* 형광펜 버튼 스타일 */
 .highlight-button {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border: 1px solid #dee2e6;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .highlight-button:hover {
   transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .highlight-button.active {
-  border: 2px solid #495057;
+  border: 2px solid #00c471;
+  box-shadow: 0 0 0 2px rgba(0, 196, 113, 0.2);
 }
 
 .highlight-tool-button {
@@ -436,6 +383,44 @@
 }
 
 .script-textarea mark:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+.reading-symbol {
+  color: #00c471;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 2px;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.reading-symbol:hover {
+  background-color: #e6f8f1;
+}
+
+.reading-symbol:active {
+  background-color: #00c471;
+  color: white;
+}
+
+.reading-symbol::after {
+  content: attr(title);
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.reading-symbol:hover::after {
   visibility: visible;
   opacity: 1;
 } 

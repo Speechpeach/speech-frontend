@@ -11,15 +11,14 @@ const VideoDetailPage = () => {
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [highlightColor, setHighlightColor] = useState('#fff740');
   const [scriptData, setScriptData] = useState([
-    { time: '00:00', text: '앵커: 안녕하십니까, KBS 뉴스입니다.' },
-    { time: '00:05', text: '오늘의 주요 뉴스를 전해드리겠습니다.' },
-    { time: '00:10', text: '첫 번째 소식입니다. 정부가 오늘 발표한 새로운 정책에 대해 알아보겠습니다.' },
+    { text: '[00:00] 앵커: 안녕하십니까, KBS 뉴스입니다.\n\n[00:05] 오늘의 주요 뉴스를 전해드리겠습니다.\n\n[00:10] 첫 번째 소식입니다. 정부가 오늘 발표한 새로운 정책에 대해 알아보겠습니다.' }
   ]);
 
+  const [player, setPlayer] = useState(null);
   const textareaRefs = useRef({});
 
-  const insertSymbol = (lineIndex, symbol) => {
-    const textarea = textareaRefs.current[lineIndex];
+  const insertSymbol = (symbol) => {
+    const textarea = textareaRefs.current;
     if (!textarea) return;
 
     const selection = window.getSelection();
@@ -28,20 +27,26 @@ const VideoDetailPage = () => {
     // 선택된 텍스트가 해당 div 내부인지 확인
     if (!textarea.contains(range.commonAncestorContainer)) {
       // 커서가 없는 경우 텍스트 끝에 추가
-      const textNode = document.createTextNode(symbol);
-      textarea.appendChild(textNode);
+      const span = document.createElement('span');
+      span.className = 'reading-symbol';
+      span.textContent = symbol;
+      span.title = '클릭하여 삭제';
+      textarea.appendChild(span);
     } else {
       // 선택된 위치에 삽입
-      const textNode = document.createTextNode(symbol);
-      range.insertNode(textNode);
+      const span = document.createElement('span');
+      span.className = 'reading-symbol';
+      span.textContent = symbol;
+      span.title = '클릭하여 삭제';
+      range.insertNode(span);
       // 커서를 삽입된 기호 뒤로 이동
-      range.setStartAfter(textNode);
-      range.setEndAfter(textNode);
+      range.setStartAfter(span);
+      range.setEndAfter(span);
     }
     
     const newScriptData = [...scriptData];
-    newScriptData[lineIndex] = {
-      ...newScriptData[lineIndex],
+    newScriptData[0] = {
+      ...newScriptData[0],
       text: textarea.innerHTML
     };
     setScriptData(newScriptData);
@@ -84,26 +89,25 @@ const VideoDetailPage = () => {
     setMemo(e.target.value);
   };
 
-  const removeHighlight = (event, lineIndex) => {
-    // mark 태그를 클릭한 경우에만 처리
-    if (event.target.tagName.toLowerCase() === 'mark') {
+  const removeHighlight = (event) => {
+    // mark 태그나 reading-symbol 클래스를 가진 span을 클릭한 경우 처리
+    if (event.target.tagName.toLowerCase() === 'mark' || 
+        (event.target.tagName.toLowerCase() === 'span' && event.target.classList.contains('reading-symbol'))) {
       const mark = event.target;
-      const textContent = mark.textContent;
-      const textNode = document.createTextNode(textContent);
-      mark.parentNode.replaceChild(textNode, mark);
+      mark.remove(); // 요소를 완전히 제거
       
-      const textarea = textareaRefs.current[lineIndex];
+      const textarea = textareaRefs.current;
       const newScriptData = [...scriptData];
-      newScriptData[lineIndex] = {
-        ...newScriptData[lineIndex],
+      newScriptData[0] = {
+        ...newScriptData[0],
         text: textarea.innerHTML
       };
       setScriptData(newScriptData);
     }
   };
 
-  const handleHighlight = (lineIndex) => {
-    const textarea = textareaRefs.current[lineIndex];
+  const handleHighlight = () => {
+    const textarea = textareaRefs.current;
     if (!textarea) return;
 
     const selection = window.getSelection();
@@ -135,14 +139,55 @@ const VideoDetailPage = () => {
     }
 
     const newScriptData = [...scriptData];
-    newScriptData[lineIndex] = {
-      ...newScriptData[lineIndex],
+    newScriptData[0] = {
+      ...newScriptData[0],
       text: textarea.innerHTML
     };
     setScriptData(newScriptData);
     
     // 선택 영역 초기화
     selection.removeAllRanges();
+  };
+
+  const handleTimeClick = (timeStr) => {
+    if (!player) return;
+    
+    // "[00:00]" 형식의 시간을 초 단위로 변환
+    const [minutes, seconds] = timeStr
+      .replace("[", "")
+      .replace("]", "")
+      .split(":")
+      .map(Number);
+    
+    const timeInSeconds = minutes * 60 + seconds;
+    
+    // YouTube 플레이어의 시간 이동
+    player.seekTo(timeInSeconds);
+    player.playVideo();
+  };
+
+  const onYouTubeIframeAPIReady = (event) => {
+    setPlayer(event.target);
+  };
+
+  const formatScriptWithClickableTime = (text) => {
+    // 시간 패턴 매칭을 위한 정규식
+    const timePattern = /\[(\d{2}:\d{2})\]/g;
+    
+    // HTML로 변환된 텍스트를 생성
+    const formattedText = text.replace(timePattern, (match, time) => {
+      return `<time data-time="${time}">[${time}]</time>`;
+    });
+    
+    return formattedText;
+  };
+
+  const handleScriptClick = (e) => {
+    // time 태그를 클릭한 경우에만 처리
+    if (e.target.tagName.toLowerCase() === 'time') {
+      const timeStr = e.target.dataset.time;
+      handleTimeClick(timeStr);
+    }
   };
 
   return (
@@ -157,6 +202,7 @@ const VideoDetailPage = () => {
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                onLoad={(e) => onYouTubeIframeAPIReady(e)}
               ></iframe>
             </div>
           </div>
@@ -220,15 +266,15 @@ const VideoDetailPage = () => {
             <div className="script-tools">
               <div className="tool-group">
                 <span className="tool-label">장단음:</span>
-                <button onClick={() => insertSymbol(0, "ː")} className="tool-button">ː(장음)</button>
+                <button onClick={() => insertSymbol("ː")} className="tool-button">ː(장음)</button>
               </div>
               <div className="tool-group">
                 <span className="tool-label">끊어읽기:</span>
-                <button onClick={() => insertSymbol(0, "/")} className="tool-button">/</button>
+                <button onClick={() => insertSymbol("/")} className="tool-button">/</button>
               </div>
               <div className="tool-group">
                 <span className="tool-label">이어읽기:</span>
-                <button onClick={() => insertSymbol(0, "↗")} className="tool-button">↗</button>
+                <button onClick={() => insertSymbol("↗")} className="tool-button">↗</button>
               </div>
               <div className="tool-group">
                 <span className="tool-label">형광펜:</span>
@@ -250,42 +296,35 @@ const VideoDetailPage = () => {
               </div>
             </div>
             <div className="script-content">
-              {scriptData.map((line, index) => (
-                <div key={index} className="script-line">
-                  <span className="timestamp">{line.time}</span>
-                  <div className="script-text-container">
-                    <div
-                      ref={el => textareaRefs.current[index] = el}
-                      className="script-textarea"
-                      contentEditable="true"
-                      suppressContentEditableWarning={true}
-                      onInput={(e) => {
-                        const newScriptData = [...scriptData];
-                        newScriptData[index] = {
-                          ...newScriptData[index],
-                          text: e.target.innerHTML
-                        };
-                        setScriptData(newScriptData);
-                      }}
-                      onClick={(e) => removeHighlight(e, index)}
-                      dangerouslySetInnerHTML={{ __html: line.text }}
-                    ></div>
-                    <div className="line-tools">
-                      <button onClick={() => insertSymbol(index, "ː")} title="장음">ː</button>
-                      <button onClick={() => insertSymbol(index, "/")} title="끊어읽기">/</button>
-                      <button onClick={() => insertSymbol(index, "↗")} title="이어읽기">↗</button>
-                      <button 
-                        onClick={() => handleHighlight(index)} 
-                        title="형광펜으로 표시"
-                        className="highlight-tool-button"
-                        style={{ backgroundColor: highlightColor }}
-                      >
-                        <span className="highlight-icon">✏️</span>
-                      </button>
-                    </div>
-                  </div>
+              <div className="script-text-container">
+                <div
+                  ref={el => textareaRefs.current = el}
+                  className="script-textarea"
+                  contentEditable="true"
+                  suppressContentEditableWarning={true}
+                  onInput={(e) => {
+                    setScriptData([{ text: e.target.innerHTML }]);
+                  }}
+                  onClick={(e) => {
+                    handleScriptClick(e);
+                    removeHighlight(e);
+                  }}
+                  dangerouslySetInnerHTML={{ __html: formatScriptWithClickableTime(scriptData[0].text) }}
+                ></div>
+                <div className="line-tools">
+                  <button onClick={() => insertSymbol("ː")} title="장음">ː</button>
+                  <button onClick={() => insertSymbol("/")} title="끊어읽기">/</button>
+                  <button onClick={() => insertSymbol("↗")} title="이어읽기">↗</button>
+                  <button 
+                    onClick={handleHighlight} 
+                    title="형광펜으로 표시"
+                    className="highlight-tool-button"
+                    style={{ backgroundColor: highlightColor }}
+                  >
+                    <span className="highlight-icon">✏️</span>
+                  </button>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
