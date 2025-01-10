@@ -90,20 +90,29 @@ const VideoDetailPage = () => {
   };
 
   const removeHighlight = (event) => {
-    // mark 태그나 reading-symbol 클래스를 가진 span을 클릭한 경우 처리
-    if (event.target.tagName.toLowerCase() === 'mark' || 
-        (event.target.tagName.toLowerCase() === 'span' && event.target.classList.contains('reading-symbol'))) {
-      const mark = event.target;
-      mark.remove(); // 요소를 완전히 제거
-      
-      const textarea = textareaRefs.current;
-      const newScriptData = [...scriptData];
-      newScriptData[0] = {
-        ...newScriptData[0],
-        text: textarea.innerHTML
-      };
-      setScriptData(newScriptData);
+    const target = event.target;
+    
+    // reading-symbol 클래스를 가진 span을 클릭한 경우 완전히 제거
+    if (target.tagName.toLowerCase() === 'span' && target.classList.contains('reading-symbol')) {
+      target.remove();
     }
+    // mark 태그를 클릭한 경우 텍스트는 유지하고 형광펜만 제거
+    else if (target.tagName.toLowerCase() === 'mark') {
+      const mark = event.target;
+      const textContent = mark.textContent;
+      const textNode = document.createTextNode(textContent);
+      mark.parentNode.replaceChild(textNode, mark);
+    } else {
+      return;
+    }
+      
+    const textarea = textareaRefs.current;
+    const newScriptData = [...scriptData];
+    newScriptData[0] = {
+      ...newScriptData[0],
+      text: textarea.innerHTML
+    };
+    setScriptData(newScriptData);
   };
 
   const handleHighlight = () => {
